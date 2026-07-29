@@ -163,7 +163,7 @@ const Certifications = () => {
                 { icon: '🏅', title: 'NCC C Certificate', desc: 'Achieved the highest NCC Certificate demonstrating leadership and national service' },
                 { icon: '💼', title: '6-Month Internship', desc: 'Successfully completed MERN Stack internship at Excellence Technology' },
                 { icon: '🚀', title: '10+ Projects', desc: 'Built and deployed 10+ full-stack web applications' },
-                { icon: '🎓', title: 'Academic Excellence', desc: 'Maintaining 7.42 CGPA in B.Tech Computer Science Engineering' },
+                { icon: '🎓', title: 'Academic Excellence', desc: 'Maintaining 7.39 CGPA in B.Tech Computer Science Engineering' },
               ].map((a, i) => (
                 <motion.div
                   key={i}

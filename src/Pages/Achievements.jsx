@@ -43,11 +43,11 @@ const achievements = [
   {
     icon: '🎓',
     title: 'Academic Achievement',
-    description: 'Maintaining a strong 7.42 CGPA in B.Tech Computer Science Engineering while simultaneously working on real-world projects.',
+    description: 'Maintaining a strong 7.39 CGPA in B.Tech Computer Science Engineering while simultaneously working on real-world projects.',
     date: '2022 - 2026',
     category: 'Academic',
     color: '#EC4899',
-    details: ['7.42 CGPA', 'Computer Science Engineering', 'Final Year Student']
+    details: ['7.39 CGPA', 'Computer Science Engineering', 'Final Year Student']
   },
   {
     icon: '🏆',

@@ -31,7 +31,7 @@ const About = () => {
   const stats = [
     { number: "6+", label: "Months Experience" },
     { number: "10+", label: "Projects Completed" },
-    { number: "7.42", label: "CGPA" },
+    { number: "7.39", label: "CGPA" },
     { number: "2026", label: "Graduation Year" }
   ];
 

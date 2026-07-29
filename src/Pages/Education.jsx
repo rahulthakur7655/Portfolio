@@ -11,11 +11,11 @@ const education = [
     institution: 'Baba Banda Singh Bahadur Engineering College',
     location: 'Fatehgarh Sahib, Punjab',
     duration: '2022 - 2026',
-    cgpa: '7.42',
+    cgpa: '7.39',
     status: 'Current (Final Year)',
     color: '#14B8A6',
     highlights: [
-      'CGPA: 7.42/10',
+      'CGPA: 7.39/10',
       'Relevant Coursework: DSA, DBMS, OS, Computer Networks, Web Development',
       'Completed MERN Stack Internship at Excellence Technology',
       'Active participation in coding competitions and hackathons',

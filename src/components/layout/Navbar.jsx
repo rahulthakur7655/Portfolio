@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X, Download, ChevronDown } from "lucide-react";
+import { Download, ChevronDown } from "lucide-react";
+import { Spin as Hamburger } from 'hamburger-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const navLinks = [
@@ -47,23 +48,32 @@ const Navbar = () => {
     setMoreOpen(false);
   }, [location]);
 
+  // Close mobile menu on window resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setIsOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-slate-100' 
-        : 'bg-white/80 backdrop-blur-sm border-b border-slate-100'
+        ? 'bg-white/98 backdrop-blur-xl shadow-lg border-b border-slate-200/50' 
+        : 'bg-white/90 backdrop-blur-md border-b border-slate-100'
     }`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20">
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-200">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white flex items-center justify-center font-black text-base sm:text-lg shadow-lg shadow-teal-200/50 group-hover:shadow-teal-300/70 transition-all group-hover:scale-105">
               RT
             </div>
-            <div>
-              <h1 className="font-bold text-[#0F172A] text-lg leading-none">Rahul Thakur</h1>
-              <p className="text-xs text-[#14B8A6] font-medium">MERN Stack Developer</p>
+            <div className="hidden xs:block">
+              <h1 className="font-bold text-[#0F172A] text-sm sm:text-base lg:text-lg leading-none">Rahul Thakur</h1>
+              <p className="text-[10px] sm:text-xs text-[#14B8A6] font-semibold">MERN Stack Developer</p>
             </div>
           </Link>
 
@@ -74,13 +84,15 @@ const Navbar = () => {
                 <div key="more" className="relative">
                   <button
                     onClick={() => setDropdown(!dropdown)}
-                    className={`flex items-center gap-1 px-4 py-2 rounded-lg font-medium text-sm transition ${
-                      dropdown ? 'text-[#14B8A6] bg-teal-50' : 'text-slate-600 hover:text-[#14B8A6] hover:bg-slate-50'
+                    onMouseEnter={() => setDropdown(true)}
+                    onMouseLeave={() => setDropdown(false)}
+                    className={`flex items-center gap-1 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                      dropdown ? 'text-[#14B8A6] bg-teal-50 shadow-sm' : 'text-slate-700 hover:text-[#14B8A6] hover:bg-slate-50'
                     }`}
                   >
                     {link.name}
                     <motion.div animate={{ rotate: dropdown ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <ChevronDown size={15} />
+                      <ChevronDown size={16} />
                     </motion.div>
                   </button>
                   <AnimatePresence>
@@ -90,17 +102,19 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full mt-2 left-0 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 w-52 overflow-hidden"
+                        onMouseEnter={() => setDropdown(true)}
+                        onMouseLeave={() => setDropdown(false)}
+                        className="absolute top-full mt-2 right-0 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 w-56 overflow-hidden"
                       >
                         {link.items.map(item => (
                           <NavLink
                             key={item.path}
                             to={item.path}
                             className={({ isActive }) =>
-                              `block px-4 py-2.5 text-sm font-medium transition ${
+                              `block px-5 py-2.5 text-sm font-medium transition-all ${
                                 isActive
-                                  ? 'text-[#14B8A6] bg-teal-50'
-                                  : 'text-slate-600 hover:text-[#14B8A6] hover:bg-slate-50'
+                                  ? 'text-[#14B8A6] bg-teal-50 border-l-4 border-[#14B8A6]'
+                                  : 'text-slate-600 hover:text-[#14B8A6] hover:bg-slate-50 hover:translate-x-1'
                               }`
                             }
                           >
@@ -116,10 +130,10 @@ const Navbar = () => {
                   key={link.path}
                   to={link.path}
                   className={({ isActive }) =>
-                    `px-4 py-2 rounded-lg font-medium text-sm transition ${
+                    `px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
                       isActive
-                        ? 'text-[#14B8A6] bg-teal-50'
-                        : 'text-slate-600 hover:text-[#14B8A6] hover:bg-slate-50'
+                        ? 'text-[#14B8A6] bg-teal-50 shadow-sm'
+                        : 'text-slate-700 hover:text-[#14B8A6] hover:bg-slate-50'
                     }`
                   }
                 >
@@ -129,23 +143,26 @@ const Navbar = () => {
             )}
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA Button (Desktop) */}
           <a
             href="/resume.pdf"
             download
-            className="hidden lg:flex items-center gap-2 bg-[#14B8A6] text-white px-5 py-2.5 rounded-xl hover:bg-[#0D9488] transition font-semibold text-sm shadow-lg shadow-teal-200"
+            className="hidden lg:flex items-center gap-2 bg-gradient-to-r from-[#14B8A6] to-[#0D9488] text-white px-6 py-2.5 rounded-xl hover:from-[#0D9488] hover:to-[#0a7a70] transition-all font-bold text-sm shadow-lg shadow-teal-200/50 hover:shadow-teal-300/70 hover:scale-105"
           >
             <Download size={16} />
-            Resume
+            <span className="hidden xl:inline">Resume</span>
           </a>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center border border-slate-200 hover:bg-slate-50 transition"
-          >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Mobile Menu Button with Hamburger React */}
+          <div className="lg:hidden">
+            <Hamburger 
+              toggled={isOpen} 
+              toggle={setIsOpen} 
+              size={24} 
+              color={isOpen ? "#14B8A6" : "#0F172A"}
+              duration={0.3}
+            />
+          </div>
 
         </div>
       </div>
@@ -157,68 +174,71 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white border-t border-slate-100 overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            className="lg:hidden bg-white/98 backdrop-blur-xl border-t border-slate-100 overflow-hidden shadow-xl"
           >
-            <div className="flex flex-col p-4 gap-1">
-              {navLinks.map((link) =>
-                link.dropdown ? (
-                  <div key="more">
-                    <button
-                      onClick={() => setMoreOpen(!moreOpen)}
-                      className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 font-medium text-sm hover:bg-slate-50 transition"
-                    >
-                      More Pages
-                      <motion.div animate={{ rotate: moreOpen ? 180 : 0 }}>
-                        <ChevronDown size={16} />
-                      </motion.div>
-                    </button>
-                    <AnimatePresence>
-                      {moreOpen && (
-                        <motion.div
-                          initial={{ height: 0 }}
-                          animate={{ height: 'auto' }}
-                          exit={{ height: 0 }}
-                          className="overflow-hidden pl-4"
-                        >
-                          {link.items.map(item => (
-                            <NavLink
-                              key={item.path}
-                              to={item.path}
-                              className={({ isActive }) =>
-                                `block px-4 py-2.5 rounded-xl text-sm font-medium transition ${
-                                  isActive ? 'text-[#14B8A6] bg-teal-50' : 'text-slate-600 hover:bg-slate-50'
-                                }`
-                              }
-                            >
-                              {item.name}
-                            </NavLink>
-                          ))}
+            <div className="max-w-7xl mx-auto px-4 py-4 max-h-[70vh] overflow-y-auto">
+              <div className="flex flex-col gap-1">
+                {navLinks.map((link) =>
+                  link.dropdown ? (
+                    <div key="more">
+                      <button
+                        onClick={() => setMoreOpen(!moreOpen)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-700 font-semibold text-sm hover:bg-slate-50 transition-all"
+                      >
+                        <span>More Pages</span>
+                        <motion.div animate={{ rotate: moreOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                          <ChevronDown size={18} />
                         </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <NavLink
-                    key={link.path}
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `px-4 py-3 rounded-xl text-sm font-medium transition ${
-                        isActive ? 'text-[#14B8A6] bg-teal-50 font-semibold' : 'text-slate-600 hover:bg-slate-50'
-                      }`
-                    }
-                  >
-                    {link.name}
-                  </NavLink>
-                )
-              )}
-              <a
-                href="/resume.pdf"
-                download
-                className="bg-[#14B8A6] text-white px-4 py-3 rounded-xl flex items-center justify-center gap-2 font-semibold text-sm mt-2 hover:bg-[#0D9488] transition"
-              >
-                <Download size={16} /> Download Resume
-              </a>
+                      </button>
+                      <AnimatePresence>
+                        {moreOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden pl-4 mt-1"
+                          >
+                            {link.items.map(item => (
+                              <NavLink
+                                key={item.path}
+                                to={item.path}
+                                className={({ isActive }) =>
+                                  `block px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                                    isActive ? 'text-[#14B8A6] bg-teal-50 shadow-sm' : 'text-slate-600 hover:bg-slate-50'
+                                  }`
+                                }
+                              >
+                                {item.name}
+                              </NavLink>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <NavLink
+                      key={link.path}
+                      to={link.path}
+                      className={({ isActive }) =>
+                        `px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                          isActive ? 'text-[#14B8A6] bg-teal-50 shadow-sm' : 'text-slate-700 hover:bg-slate-50'
+                        }`
+                      }
+                    >
+                      {link.name}
+                    </NavLink>
+                  )
+                )}
+                <a
+                  href="/resume.pdf"
+                  download
+                  className="bg-gradient-to-r from-[#14B8A6] to-[#0D9488] text-white px-4 py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-sm mt-2 hover:from-[#0D9488] hover:to-[#0a7a70] transition-all shadow-lg"
+                >
+                  <Download size={16} /> Download Resume
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

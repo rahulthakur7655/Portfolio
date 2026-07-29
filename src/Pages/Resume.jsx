@@ -131,7 +131,7 @@ const Resume = () => {
                     </div>
                     <div className="text-right">
                       <span className="text-sm text-slate-500">2022 - 2026</span>
-                      <p className="font-bold text-[#14B8A6]">CGPA: 7.42</p>
+                      <p className="font-bold text-[#14B8A6]">CGPA: 7.39</p>
                     </div>
                   </div>
                   <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 flex justify-between flex-wrap gap-2">
