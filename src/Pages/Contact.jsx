@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, Linkedin, Github } from 'lucide-react';
-import { FaEnvelope } from 'react-icons/fa';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -61,14 +61,14 @@ const Contact = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      icon: <Github size={20} />,
+      icon: <FaGithub size={20} />,
       url: 'https://github.com/rahulthakur7655',
       color: '#0F172A',
       username: '@rahulthakur7655'
     },
     {
       name: 'LinkedIn',
-      icon: <Linkedin size={20} />,
+      icon: <FaLinkedin size={20} />,
       url: 'https://www.linkedin.com/in/rahul-thakur-91399a3b5',
       color: '#0A66C2',
       username: '/rahul-thakur'
